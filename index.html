@@ -1,0 +1,70 @@
+<html>
+<head>
+    <title>tiny fatties</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        function App() {
+            const videoRef = React.useRef(null);
+            const audioRef = React.useRef(null);
+
+            const handlePlay = () => {
+                videoRef.current.play();
+                audioRef.current.play();
+            };
+
+            const handlePause = () => {
+                videoRef.current.pause();
+                audioRef.current.pause();
+            };
+
+            const handleStop = () => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+            };
+
+            return (
+                <div className="bg-cyan-50 h-screen w-full flex flex-col justify-between">
+                    <header className="flex justify-between p-4 text-black">
+                        <a href="https://twitter.com/tinyfatties" target="_blank" rel="noopener noreferrer">""TWITTER"" (X)</a>
+                        <a href="https://discord.gg/bsaCyfcSqB" target="_blank" rel="noopener noreferrer">""DISCORD""</a>
+                    </header>
+                    <main className="flex flex-col items-center justify-center">
+                        <video ref={videoRef} loop muted className="mb-4" width="400" height="300">
+                            <source src="dance.mp4" type="video/mp4" />
+                        </video>
+                        <audio ref={audioRef}> loop
+                            <source src="mix.mp3" type="audio/mpeg" />
+                        </audio>
+                        <h1 className="text-5xl font-bold mb-2">Tiny Fatties</h1>
+                        <p className="text-black mb-3">SINCE2023 / @TINYFATTIES / SOLANA BLOCKCHAIN - SMB RADIO RELEASE SOON</p>
+                    </main>
+                    <footer className="bg-black p-4 flex justify-between items-center">
+                        <div className="flex space-x-4">
+                            <button onClick={handlePlay} className="text-white"><i className="fas fa-play"></i></button>
+                            <button onClick={handlePause} className="text-white"><i className="fas fa-pause"></i></button>
+                            <button onClick={handleStop} className="text-white"><i className="fas fa-stop"></i></button>
+                        </div>
+                        <div className="text-white">@tinyfatties</div>
+                        <div className="flex space-x-4">
+                            <a href="https://jusmnt.lol" className="border border-white text-white px-4 py-1">mint</a>
+                            <a href="https://tinyfatties.gitbook.io/tiny-fatties/" className="border border-white text-white px-4 py-1">lore</a>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+</body>
+</html>
