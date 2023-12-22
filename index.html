@@ -14,6 +14,26 @@
         function App() {
             const videoRef = React.useRef(null);
             const audioRef = React.useRef(null);
+            const [entered, setEntered] = React.useState(false);
+
+            const handleEnter = () => {
+                setEntered(true);
+            };
+
+            React.useEffect(() => {
+                if (entered) {
+                    const playPromise = videoRef.current.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            // Automatic playback started!
+                        }).catch(error => {
+                            // Auto-play was prevented
+                            // Show a UI element to let the user manually start playback
+                        });
+                    }
+                    audioRef.current.play();
+                }
+            }, [entered]);
 
             const handlePlay = () => {
                 videoRef.current.play();
@@ -32,17 +52,30 @@
                 audioRef.current.currentTime = 0;
             };
 
+            if (!entered) {
+                return (
+                    <div className="h-screen w-full flex items-center justify-center bg-white">
+                        <button
+                            onClick={handleEnter}
+                            className="bg-black text-white font-bold py-2 px-4 rounded"
+                        >
+                            enter the cult
+                        </button>
+                    </div>
+                );
+            }
+
             return (
                 <div className="bg-cyan-50 h-screen w-full flex flex-col justify-between">
                     <header className="flex justify-between p-4 text-black">
-                        <a href="https://twitter.com/tinyfatties" target="_blank" rel="noopener noreferrer">""TWITTER"" (X)</a>
-                        <a href="https://discord.gg/bsaCyfcSqB" target="_blank" rel="noopener noreferrer">""DISCORD""</a>
+                        <a href="https://twitter.com/tinyfatties" target="_blank" rel="noopener noreferrer">TWITTER (X)</a>
+                        <a href="https://discord.gg/bsaCyfcSqB" target="_blank" rel="noopener noreferrer">DISCORD</a>
                     </header>
                     <main className="flex flex-col items-center justify-center">
                         <video ref={videoRef} loop muted className="mb-4" width="400" height="300">
                             <source src="dance.mp4" type="video/mp4" />
                         </video>
-                        <audio ref={audioRef}> loop
+                        <audio ref={audioRef} loop>
                             <source src="mix.mp3" type="audio/mpeg" />
                         </audio>
                         <h1 className="text-5xl font-bold mb-2">Tiny Fatties</h1>
