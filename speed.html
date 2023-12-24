@@ -1,16 +1,50 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Notification</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /* to remove scrollbars caused by the image */
+        }
+
+        img {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -1;
+            /* place the image behind other elements */
+        }
+    </style>
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
     <img src="bg.gif" alt="Background GIF" id="background-gif">
+
     <div id="app"></div>
 
     <script type="text/babel">
+        function replayGif() {
+            const gif = document.getElementById('background-gif');
+            gif.style.display = 'none';
+            gif.offsetHeight; // trigger reflow
+            gif.style.display = 'block';
+        }
+
         function App() {
             const [notification, setNotification] = React.useState(null);
 
@@ -26,7 +60,7 @@
                         }}
                         className="px-4 py-2 bg-gray-800 text-white rounded-md"
                     >
-                        you have speeded up the airdrop by 1 second!
+                        You have speeded up the airdrop by 1 second!
                     </div>
                 );
                 setNotification(newNotification);
@@ -34,13 +68,13 @@
             };
 
             return (
-                <div className="relative h-screen bg-gray-100">
+                <div className="relative h-screen bg-transparent">
                     <div className="flex justify-center items-center h-full">
                         <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded"
                             onClick={showNotification}
                         >
-                            speed up the tiny fatties airdrop
+                            Speed up the tiny fatties airdrop
                         </button>
                     </div>
                     {notification}
@@ -49,6 +83,11 @@
         }
 
         ReactDOM.render(<App />, document.getElementById('app'));
+
+        // Replay the GIF when it finishes
+        const backgroundGif = document.getElementById('background-gif');
+        backgroundGif.addEventListener('ended', replayGif);
     </script>
 </body>
+
 </html>
